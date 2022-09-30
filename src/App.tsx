@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import MainPart from "./components/MainPart";
+import MainContainer from "./components/MainContainer";
 
 import "./App.css";
 
@@ -7,7 +7,7 @@ export default function App() {
   return (
     <div className="App">
       <Header />
-      <MainPart />
+      <MainContainer />
     </div>
   );
 }

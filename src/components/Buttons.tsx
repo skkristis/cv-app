@@ -5,9 +5,11 @@ export default function Buttons({ setFunc }: any) {
 
   return (
     <>
-      <button className="btn" onClick={changeHandler}>
-        Add
-      </button>
+      <div className="Submit">
+        <button className="btn">Generate PDF</button>
+        <button className="btn">Load Example</button>
+        <button className="btn">Reset</button>
+      </div>
     </>
   );
 }
