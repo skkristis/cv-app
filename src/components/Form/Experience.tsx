@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { ExperienceFormInputs, ExperienceFormProps, FormValues } from "../../types";
 
-export default function Experience({ setFormValues, formValues }: ExperienceFormProps) {
+export default function Experience({ setFormValues, experienceValues, id }: ExperienceFormProps) {
   const { register, getValues } = useForm<ExperienceFormInputs>();
   const inputsDefinitions = [
     {
@@ -29,16 +29,21 @@ export default function Experience({ setFormValues, formValues }: ExperienceForm
   return (
     <form className="form">
       {inputsDefinitions.map((input) => {
+        const regName = input.registerName;
+
         return (
           <input
-            key={input.registerName}
-            value={(formValues && formValues[input.registerName]) ?? ""}
+            key={regName}
+            value={experienceValues[regName]}
             placeholder={input.placeholder}
-            {...register(input.registerName, {
+            {...register(regName, {
               onChange: () => {
-                setFormValues((prevValues: FormValues) => {
-                  console.log({ ...prevValues, experience: getValues() });
-                  return { ...prevValues, experience: getValues() };
+                setFormValues((prevState: FormValues) => {
+                  const newState = JSON.parse(JSON.stringify(prevState));
+                  const currObjIndex = newState.experience.findIndex((x: ExperienceFormInputs) => x.id === id);
+                  newState.experience.splice(currObjIndex, 1, getValues());
+                  newState.experience[currObjIndex].id = id;
+                  return { ...newState };
                 });
               },
             })}

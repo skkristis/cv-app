@@ -1,18 +1,25 @@
-import { OutputProps } from "../../types";
-import checkValue from "../../utils/checkValue";
+import { ExperienceFormInputs } from "../../types";
 
-export default function OutputInfoExperience({ formValues }: OutputProps) {
+type Props = {
+  experienceValues: ExperienceFormInputs[];
+};
+
+export default function OutputInfoExperience({ experienceValues }: Props) {
   return (
     <>
       <h3 className="section-header">Experience</h3>
       <section>
-        <div className="entry">
-          <h4>{`${checkValue(formValues, "experience", "from")} - ${checkValue(formValues, "experience", "to")}`}</h4>
-          <div className="entry-section">
-            <h4>{checkValue(formValues, "experience", "position")}</h4>
-            <p>{`${checkValue(formValues, "experience", "company")}, ${checkValue(formValues, "experience", "city")}`}</p>
-          </div>
-        </div>
+        {experienceValues.map((entry, i) => {
+          return (
+            <div key={i} className="entry">
+              <h4>{`${entry.from ?? ""} - ${entry.to ?? ""}`}</h4>
+              <div className="entry-section">
+                <h4>{entry.position ?? ""}</h4>
+                <p>{`${entry.company ?? ""}, ${entry.city ?? ""}`}</p>
+              </div>
+            </div>
+          );
+        })}
       </section>
     </>
   );

@@ -1,9 +1,8 @@
 import { useForm } from "react-hook-form";
 import { FormValues, PersonalFormInputs, PersonalFormProps } from "../../types";
 
-export default function Personal({ setFormValues, formValues }: PersonalFormProps) {
+export default function Personal({ setFormValues, personalValues }: PersonalFormProps) {
   const { register, getValues } = useForm<PersonalFormInputs>();
-
   const inputsDefinitions = [
     {
       placeholder: "First Name",
@@ -38,16 +37,17 @@ export default function Personal({ setFormValues, formValues }: PersonalFormProp
   return (
     <form className="form">
       {inputsDefinitions.map((input) => {
+        const regName = input.registerName;
+
         return (
           <input
-            key={input.registerName}
-            value={(formValues && formValues[input.registerName]) ?? ""}
+            key={regName}
+            value={personalValues?.regName}
             placeholder={input.placeholder}
-            {...register(input.registerName, {
+            {...register(regName, {
               onChange: () => {
-                setFormValues((prevValues: FormValues) => {
-                  console.log({ ...prevValues, personal: getValues() });
-                  return { ...prevValues, personal: getValues() };
+                setFormValues((prevState: FormValues) => {
+                  return { ...prevState, personal: getValues() };
                 });
               },
             })}

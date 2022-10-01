@@ -1,10 +1,7 @@
 export type FormValues = {
   personal: PersonalFormInputs;
-  experience: ExperienceFormInputs;
-  // experience: ExperienceFormInputs[];
-
-  education: EducationFormInputs;
-  // education: EducationFormInputs[];
+  experience: ExperienceFormInputs[];
+  education: EducationFormInputs[];
 };
 
 export type PersonalFormInputs = {
@@ -15,9 +12,11 @@ export type PersonalFormInputs = {
   phoneNumber: string;
   email: string;
   description: string;
+  regName?: string;
 };
 
 export type ExperienceFormInputs = {
+  id: number;
   position: string;
   company: string;
   city: string;
@@ -26,6 +25,7 @@ export type ExperienceFormInputs = {
 };
 
 export type EducationFormInputs = {
+  id: number;
   uniName: string;
   city: string;
   degree: string;
@@ -36,15 +36,17 @@ export type EducationFormInputs = {
 
 export type PersonalFormProps = {
   setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
-  formValues: undefined | PersonalFormInputs;
+  personalValues: undefined | PersonalFormInputs;
 };
 export type ExperienceFormProps = {
+  id: number;
   setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
-  formValues: undefined | ExperienceFormInputs;
+  experienceValues: undefined | ExperienceFormInputs;
 };
 export type EducationFormProps = {
+  id: number;
   setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
-  formValues: undefined | EducationFormInputs;
+  educationValues: undefined | EducationFormInputs;
 };
 
 export type OutputProps = {

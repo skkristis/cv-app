@@ -13,10 +13,11 @@ export default function Form({ setFormValues, formValues }: Props) {
   const { personal, experience, education } = formValues;
   return (
     <div className="form-container">
-      <PersonalForm formValues={personal} setFormValues={setFormValues} />
-      <ExperienceForm formValues={experience} setFormValues={setFormValues} />
-      <EducationForm formValues={education} setFormValues={setFormValues} />
-      {/* <Buttons /> */}
+      <PersonalForm personalValues={personal} setFormValues={setFormValues} />
+      <ExperienceForm experienceValues={experience} setFormValues={setFormValues} />
+      <EducationForm educationValues={education} setFormValues={setFormValues} />
+
+      <Buttons setFormValues={setFormValues} formValues={formValues} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ export default function OutputContent({ formValues }: OutputProps) {
     <>
       <section className="output-content-container">
         <OutputContentInfo formValues={formValues} />
-        <OutputContentContacts formValues={formValues} />
+        <OutputContentContacts personalValues={formValues.personal} />
       </section>
     </>
   );

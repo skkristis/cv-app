@@ -1,4 +1,4 @@
-import { FormValues, OutputProps } from "../../types";
+import { OutputProps } from "../../types";
 import OutputContent from "./OutputContent";
 import OutputHeader from "./OutputHeader";
 
