@@ -12,7 +12,6 @@ export type PersonalFormInputs = {
   phoneNumber: string;
   email: string;
   description: string;
-  regName?: string;
 };
 
 export type ExperienceFormInputs = {

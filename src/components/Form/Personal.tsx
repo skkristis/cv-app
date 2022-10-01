@@ -42,7 +42,7 @@ export default function Personal({ setFormValues, personalValues }: PersonalForm
         return (
           <input
             key={regName}
-            value={personalValues?.regName}
+            value={personalValues[regName]}
             placeholder={input.placeholder}
             {...register(regName, {
               onChange: () => {
