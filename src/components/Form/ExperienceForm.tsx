@@ -1,14 +1,51 @@
-import { ExperienceFormInputs, FormValues } from "../../types";
-import AddButton from "../AddButton";
-import DeleteButton from "../DeleteButton";
+import { ExperienceFormInputs, FormValues, IdentifiableEntity, SetStateAction } from "../../types";
+import ButtonTemplate from "../ButtonTemplate";
 import Experience from "./Experience";
 
 type Props = {
-  setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
+  setFormValues: SetStateAction<FormValues>;
   experienceValues: ExperienceFormInputs[];
 };
 
 export default function ExperienceForm({ setFormValues, experienceValues }: Props) {
+  const addSectionClick = () => {
+    setFormValues((prevState: FormValues) => {
+      const newState = JSON.parse(JSON.stringify(prevState));
+      const newId = newState.experience.length;
+
+      newState.experience.push({
+        id: newId,
+        position: "",
+        company: "",
+        city: "",
+        from: "",
+        to: "",
+      });
+
+      return { ...newState };
+    });
+  };
+
+  const deleteSectionClick = (idGiven: number) => {
+    setFormValues((oldState) => {
+      const newState = JSON.parse(JSON.stringify(oldState));
+      const currObjIndex = newState.experience.findIndex((x: IdentifiableEntity) => x.id === idGiven);
+
+      newState.experience.splice(currObjIndex, 1);
+      return { ...newState };
+    });
+  };
+
+  const experienceSet = (id: number, currValues: ExperienceFormInputs) => {
+    setFormValues((prevState: FormValues) => {
+      const newState = JSON.parse(JSON.stringify(prevState));
+      const currObjIndex = newState.experience.findIndex((x: ExperienceFormInputs) => x.id === id);
+      newState.experience.splice(currObjIndex, 1, currValues);
+      newState.experience[currObjIndex].id = id;
+      return { ...newState };
+    });
+  };
+
   return (
     <div id="Experience">
       <h3>Experience</h3>
@@ -16,12 +53,12 @@ export default function ExperienceForm({ setFormValues, experienceValues }: Prop
       {experienceValues?.map((entry, i) => {
         return (
           <div key={i}>
-            <Experience id={entry.id} experienceValues={entry} setFormValues={setFormValues} />
-            <DeleteButton id={entry.id} path="experience" setFormValues={setFormValues} />
+            <Experience id={entry.id} experienceValues={entry} experienceSet={experienceSet} />
+            <ButtonTemplate onButtonClick={() => deleteSectionClick(entry.id)} buttonText="Delete" />
           </div>
         );
       })}
-      <AddButton setFormValues={setFormValues} path="experience" />
+      <ButtonTemplate onButtonClick={addSectionClick} />
     </div>
   );
 }

@@ -4,6 +4,10 @@ export type FormValues = {
   education: EducationFormInputs[];
 };
 
+export type IdentifiableEntity = {
+  id: number;
+};
+
 export type PersonalFormInputs = {
   firstName: string;
   lastName: string;
@@ -33,20 +37,20 @@ export type EducationFormInputs = {
   to: string;
 };
 
+export type SetStateAction<T> = React.Dispatch<React.SetStateAction<T>>;
+
 export type PersonalFormProps = {
-  setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
-  personalValues: undefined | PersonalFormInputs;
+  personalSet: (currValues: PersonalFormInputs) => void;
+  personalValues: PersonalFormInputs;
 };
-export type ExperienceFormProps = {
-  id: number;
-  setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
-  experienceValues: undefined | ExperienceFormInputs;
-};
-export type EducationFormProps = {
-  id: number;
-  setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
-  educationValues: undefined | EducationFormInputs;
-};
+export interface ExperienceFormProps extends IdentifiableEntity {
+  experienceSet: (id: number, currValues: ExperienceFormInputs) => void;
+  experienceValues: ExperienceFormInputs;
+}
+export interface EducationFormProps extends IdentifiableEntity {
+  educationSet: (id: number, currValues: EducationFormInputs) => void;
+  educationValues: EducationFormInputs;
+}
 
 export type OutputProps = {
   formValues: FormValues;

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { EducationFormInputs, EducationFormProps, FormValues } from "../../types";
+import { EducationFormInputs, EducationFormProps } from "../../types";
 
-export default function Education({ setFormValues, educationValues, id }: EducationFormProps) {
+export default function Education({ educationSet, educationValues, id }: EducationFormProps) {
   const { register, getValues } = useForm<EducationFormInputs>();
   const inputsDefinitions = [
     {
@@ -38,18 +38,10 @@ export default function Education({ setFormValues, educationValues, id }: Educat
         return (
           <input
             key={regName}
-            value={educationValues[regName]}
+            value={educationValues[regName as keyof EducationFormInputs]}
             placeholder={input.placeholder}
-            {...register(regName, {
-              onChange: () => {
-                setFormValues((prevState: FormValues) => {
-                  const newState = JSON.parse(JSON.stringify(prevState));
-                  const currObjIndex = newState.education.findIndex((x: EducationFormInputs) => x.id === id);
-                  newState.education.splice(currObjIndex, 1, getValues());
-                  newState.education[currObjIndex].id = id;
-                  return { ...newState };
-                });
-              },
+            {...register(regName as keyof EducationFormInputs, {
+              onChange: () => educationSet(id, getValues()),
             })}
           />
         );

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { ExperienceFormInputs, ExperienceFormProps, FormValues } from "../../types";
+import { ExperienceFormInputs, ExperienceFormProps } from "../../types";
 
-export default function Experience({ setFormValues, experienceValues, id }: ExperienceFormProps) {
+export default function Experience({ experienceSet, experienceValues, id }: ExperienceFormProps) {
   const { register, getValues } = useForm<ExperienceFormInputs>();
   const inputsDefinitions = [
     {
@@ -34,18 +34,10 @@ export default function Experience({ setFormValues, experienceValues, id }: Expe
         return (
           <input
             key={regName}
-            value={experienceValues[regName]}
+            value={experienceValues[regName as keyof ExperienceFormInputs]}
             placeholder={input.placeholder}
-            {...register(regName, {
-              onChange: () => {
-                setFormValues((prevState: FormValues) => {
-                  const newState = JSON.parse(JSON.stringify(prevState));
-                  const currObjIndex = newState.experience.findIndex((x: ExperienceFormInputs) => x.id === id);
-                  newState.experience.splice(currObjIndex, 1, getValues());
-                  newState.experience[currObjIndex].id = id;
-                  return { ...newState };
-                });
-              },
+            {...register(regName as keyof ExperienceFormInputs, {
+              onChange: () => experienceSet(id, getValues()),
             })}
           />
         );

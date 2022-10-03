@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { FormValues, PersonalFormInputs, PersonalFormProps } from "../../types";
+import { PersonalFormInputs, PersonalFormProps } from "../../types";
 
-export default function Personal({ setFormValues, personalValues }: PersonalFormProps) {
+export default function Personal({ personalSet, personalValues }: PersonalFormProps) {
   const { register, getValues } = useForm<PersonalFormInputs>();
   const inputsDefinitions = [
     {
@@ -42,14 +42,10 @@ export default function Personal({ setFormValues, personalValues }: PersonalForm
         return (
           <input
             key={regName}
-            value={personalValues[regName]}
+            value={personalValues[regName as keyof PersonalFormInputs]}
             placeholder={input.placeholder}
-            {...register(regName, {
-              onChange: () => {
-                setFormValues((prevState: FormValues) => {
-                  return { ...prevState, personal: getValues() };
-                });
-              },
+            {...register(regName as keyof PersonalFormInputs, {
+              onChange: () => personalSet(getValues()),
             })}
           />
         );
@@ -57,3 +53,5 @@ export default function Personal({ setFormValues, personalValues }: PersonalForm
     </form>
   );
 }
+// cast as string and should be fine
+//try to assert type corectness

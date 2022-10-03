@@ -111,9 +111,7 @@ input {
   display: flex;
   height: 100%;
 }
-.add-btn {
-  margin-block: 20px;
-}
+
 #Experience,
 #Education {
   margin-block: 20px;

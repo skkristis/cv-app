@@ -1,4 +1,5 @@
 import { FormValues } from "../types";
+import ButtonTemplate from "./ButtonTemplate";
 
 type Props = {
   setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
@@ -6,7 +7,7 @@ type Props = {
 };
 
 export default function Buttons({ setFormValues, formValues }: Props) {
-  function reset() {
+  const reset = () => {
     setFormValues(() => ({
       personal: {
         firstName: "",
@@ -39,8 +40,8 @@ export default function Buttons({ setFormValues, formValues }: Props) {
         },
       ],
     }));
-  }
-  function loadExample() {
+  };
+  const loadExample = () => {
     setFormValues(() => ({
       personal: {
         firstName: "John",
@@ -98,17 +99,13 @@ export default function Buttons({ setFormValues, formValues }: Props) {
         },
       ],
     }));
-  }
+  };
 
   return (
     <>
       <div className="Submit">
-        <button onClick={loadExample} className="btn">
-          Load Example
-        </button>
-        <button onClick={reset} className="btn">
-          Reset
-        </button>
+        <ButtonTemplate onButtonClick={loadExample} buttonText="Load Example" />
+        <ButtonTemplate onButtonClick={reset} buttonText="Reset" />
       </div>
     </>
   );

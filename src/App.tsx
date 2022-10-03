@@ -1,4 +1,4 @@
-import Header from "./components/Header";
+import AppBar from "./components/AppBar";
 import MainContainer from "./components/MainContainer";
 
 import "./App.css";
@@ -6,7 +6,7 @@ import "./App.css";
 export default function App() {
   return (
     <div className="App">
-      <Header />
+      <AppBar />
       <MainContainer />
     </div>
   );
